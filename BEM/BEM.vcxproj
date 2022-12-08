@@ -139,10 +139,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BEM.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="dirichlet.h" />
     <ClInclude Include="integrals.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="mesh.h" />
+    <ClInclude Include="neumann.h" />
     <ClInclude Include="point.h" />
+    <ClInclude Include="solution.h" />
     <ClInclude Include="solver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

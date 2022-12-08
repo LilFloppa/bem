@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "point.h"
 #include "matrix.h"
 #include "integrals.h"
@@ -10,6 +12,22 @@ struct BEMElement
 
 	BEMElement(int v1, int v2, int p) : V1(v1), V2(v2), P(p) {}
 };
+
+Point ElementMiddle(std::vector<Point>& points, BEMElement& el)
+{
+	Point a = points[el.V1];
+	Point b = points[el.V2];
+	return (a + b) / 2;
+}
+
+Point ElementNormal(std::vector<Point>& points, BEMElement& el)
+{
+	Point a = points[el.V1];
+	Point b = points[el.V2];
+
+	Point v = (b - a).Normailze();
+	return v.Orthogonal();
+}
 
 void BuildMatrix(std::vector<Point>& points, std::vector<BEMElement>& elements, matrix<double>& V, matrix<double>& K, matrix<double>& D)
 {

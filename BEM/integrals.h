@@ -3,9 +3,7 @@
 #include <functional>
 #include <cmath>
 
-const double Eps = 1.0e-8;
-const double PI = 3.14159265358979323846;
-const double PI_2 = 1.0 / (2.0 * PI);
+#include "constants.h"
 
 std::function<double(double, double)>  Fv(double Ax, double Ay, double sin, double cos) {
 	return [=](double x, double t)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "point.h"
@@ -31,6 +32,24 @@ std::vector<Point>* GenerateInterval(Segment& segment)
 
 std::vector<Point>* GenerateMesh(std::vector<Segment>& segments)
 {
+	for (int i = 1; i < segments.size(); i++)
+	{
+		auto& s1 = segments[i - 1];
+		auto& s2 = segments[i];
+
+		if ((s2.Begin - s1.End).Norm() > Eps)
+		{
+			std::cout << "Mesh is invalid" << std::endl;
+			return nullptr;
+		}
+	}
+
+	if ((segments[segments.size() - 1].End - segments[0].Begin).Norm() > Eps)
+	{
+		std::cout << "Mesh is invalid" << std::endl;
+		return nullptr;
+	}
+
 	int totalPointCount = 0;
 	for (auto& s : segments)
 		totalPointCount += s.PointCount - 1;
