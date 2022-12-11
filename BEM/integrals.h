@@ -17,13 +17,8 @@ std::function<double(double, double)>  Fv(double Ax, double Ay, double sin, doub
 		if (std::abs(temp) > Eps)
 			result += temp * std::log(R);
 
-		if (std::abs(sin) < Eps)
-		{
-			if (std::abs(Ry) > Eps)
-			{
-				result += 2 * ((-Ax + x) * cos - t) * Ay * std::atan(Rx / Ry);
-			}
-		}
+		if (std::abs(sin) < Eps && std::abs(Ry) > Eps)
+			result += 2 * ((-Ax + x) * cos - t) * Ay * std::atan(Rx / Ry);
 		else
 		{
 			double a = (cos * Ry - sin * Rx);

@@ -46,7 +46,7 @@ void BasicDirichletProblem()
 	Gauss(V, p, b);
 
 	for (auto pi : p)
-		std::cout << std::setprecision(6) << std::scientific << pi << "\t";
+		std::cout << std::setprecision(6) << std::scientific << pi << "\n";
 
 	std::cout << std::endl;
 }
@@ -86,7 +86,11 @@ void DirichletProblemWithComplexDomain()
 
 
 	std::function<double(double, double)> u = [](double x, double y) {
-		return x + y;
+		return 2 * x - 0.5 * y;
+	};
+
+	std::function<Point(double, double)> gradu = [](double x, double y) {
+		return Point(2, -0.5);
 	};
 
 	BuildMatrix(points, elements, V, K, D);
@@ -102,15 +106,14 @@ void DirichletProblemWithComplexDomain()
 	MultVector(K, q, b);
 	Gauss(V, p, b);
 
-	for (auto pi : p)
-		std::cout << std::setprecision(6)  << std::scientific << pi << "\n";
+	for (int i = 0; i < nodeCount; i++)
+		std::cout << std::setprecision(1) << std::fixed << q[i] << " & " << std::setprecision(6) << std::scientific << p[i] << " \\\\" << "\n";
 
 	std::cout << std::endl;
 }
 
-void DirichletSquareFunction()
+void DirichletSquareFunction(int segmentPointCount)
 {
-	int segmentPointCount = 64;
 	auto segments = std::vector<Segment>
 	{
 		Segment{ { 0.0, 0.0 }, { 0.3, 0.0 },  segmentPointCount },
@@ -173,6 +176,7 @@ void DirichletSquareFunction()
 	for (int i = 0; i < nodeCount; i++)
 		sum += (realp[i] - p[i]) * (realp[i] - p[i]);
 
-	std::cout << std::setw(20) << std::left << "Element Count: " << elementCount << std::endl;
-	std::cout << std::setw(20) << std::left << "R: " << std::sqrt(sum) << std::endl;
+	std::cout << elementCount << " & " << std::sqrt(sum) << " \\\\" << std::endl;
+	//std::cout << std::setw(20) << std::left << "Element Count: " << elementCount << std::endl;
+	//std::cout << std::setw(20) << std::left << "R: " << std::sqrt(sum) << std::endl;
 }

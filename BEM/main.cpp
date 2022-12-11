@@ -15,7 +15,27 @@
 
 int main()
 {
-	// NeumannSquareFunction();
-	DirichletSquareFunction();
+	// BasicDirichletProblem();
+	// BasicNeumannProblem();
+
+	// DirichletProblemWithComplexDomain();
+	// NeumannProblemWithComplexDomain();
+	
+	int multiplier = 2;
+	for (int i = 0; i < 6; i++)
+	{
+		DirichletSquareFunction(multiplier);
+		multiplier *= 2;
+	}
+
+	std::cout << std::endl << std::endl;
+
+	multiplier = 2;
+	for (int i = 0; i < 6; i++)
+	{
+		NeumannSquareFunction(multiplier);
+		multiplier *= 2;
+	}
+
 	return 0;
 }

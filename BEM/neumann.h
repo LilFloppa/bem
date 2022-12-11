@@ -64,7 +64,7 @@ void BasicNeumannProblem()
 	std::cout << "R: " << std::sqrt(sum) << std::endl;
 
 	for (auto qi : q)
-		std::cout << std::setprecision(6) << std::scientific << qi << "\t";
+		std::cout << std::setprecision(6) << std::scientific << qi << "\n";
 }
 
 void NeumannProblemWithComplexDomain()
@@ -115,11 +115,11 @@ void NeumannProblemWithComplexDomain()
 
 
 	std::function<double(double, double)> u = [](double x, double y) {
-		return x + y;
+		return 2 * x - 0.5 * y;
 	};
 
 	std::function<Point(double, double)> gradu = [](double x, double y) {
-		return Point(1, 1);
+		return Point(2, -0.5);
 	};
 
 	std::vector<double> q(nodeCount);
@@ -137,6 +137,7 @@ void NeumannProblemWithComplexDomain()
 
 	MultVector(Kt, p, Ktp);
 	MultVector(D, q, Dq);
+	LOS(D, q, Ktp, 1000, 1.0e-12);
 
 	double sum = 0;
 	for (int i = 0; i < nodeCount; i++)
@@ -144,13 +145,12 @@ void NeumannProblemWithComplexDomain()
 
 	std::cout << "R: " << std::sqrt(sum) << std::endl;
 
-	for (auto qi : q)
-		std::cout << std::setprecision(6) << std::scientific << qi << "\t";
+	for (int i = 0; i < nodeCount; i++)
+		std::cout << std::setprecision(1) << std::fixed << p[i] << " & " << std::setprecision(6) << std::scientific << q[i] << " \\\\" << "\n";
 }
 
-void NeumannSquareFunction()
+void NeumannSquareFunction(int segmentPointCount)
 {
-	int segmentPointCount = 64;
 	auto segments = std::vector<Segment>
 	{
 		Segment{ { 0.0, 0.0 }, { 0.3, 0.0 },  segmentPointCount },
@@ -224,5 +224,5 @@ void NeumannSquareFunction()
 	for (int i = 0; i < nodeCount; i++)
 		sum += (Ktp[i] - Dq[i]) * (Ktp[i] - Dq[i]);
 
-	std::cout << "R: " << std::sqrt(sum) << std::endl;
+	std::cout << elementCount << " & " << std::sqrt(sum) << " \\\\" << std::endl;
 }
